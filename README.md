@@ -6,7 +6,7 @@
 # Fan Hub
 ### Linux Fan Control & RGB Management
 
-**Beta Release** · PyQt6 · Ubuntu/Debian · Python 3.10+
+**Beta Release 1.5.2** · PyQt6 · Ubuntu/Debian · Python 3.10+
 
 *The Windows fan curve experience, brought to Linux.*
 ---
@@ -80,6 +80,15 @@ Fan Hub has seven tabs across the top:
 <img width="1920" height="1080" alt="Screenshot_20260412_174148" src="https://github.com/user-attachments/assets/3af0e9b0-a73f-4adf-a8d7-13d160777f63" />
 <img width="1920" height="1080" alt="Screenshot_20260412_174118" src="https://github.com/user-attachments/assets/2d8926d1-92fe-486d-a385-ffa3acef3748" />
 <img width="1920" height="1080" alt="Screenshot_20260412_174106" src="https://github.com/user-attachments/assets/6385648f-a677-4a91-8239-2052e3ce36a5" />
+
+Below are some tests on a machine with Daisy Chain fans; they will not appear in the fans at all (this is not a limitation of Fan Hub, it is due to the fans having their own controller and not hooked up to sys_fan1), just the CPU, but it is working as intended, thus far. I will be testing on laptops and another desktop soon. Also, some name changes on fans and hardware, to better understand what sensors are being monitored. Still working on the GPU fans, as for some reason they are not wanting to speed up. I will update when it is closer to being ready for launch.
+
+<img width="1920" height="1080" alt="Screenshot_20260420_084750" src="https://github.com/user-attachments/assets/6d7061dc-cbbf-4eab-afe8-9813ae77a2f7" />
+<img width="1920" height="1080" alt="Screenshot_20260420_084729" src="https://github.com/user-attachments/assets/62218556-99be-4c15-900d-0f4cf51a1d1f" />
+<img width="1920" height="1080" alt="Screenshot_20260420_084710" src="https://github.com/user-attachments/assets/6fc8dddf-5bfb-43c2-813f-eb93bc92d228" />
+<img width="1920" height="1080" alt="Screenshot_20260420_084838" src="https://github.com/user-attachments/assets/7457b414-0f83-4638-8a21-3bc5a3421901" />
+<img width="1920" height="1080" alt="Screenshot_20260420_084829" src="https://github.com/user-attachments/assets/c58e9213-6fb4-4940-9e89-4cf59e41ac02" />
+<img width="1920" height="1080" alt="Screenshot_20260420_084813" src="https://github.com/user-attachments/assets/7c415cd7-9a4d-4a2e-8187-f0920caef909" />
 
 ---
 
