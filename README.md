@@ -31,6 +31,12 @@ Fan Hub is the Windows fan control experience, rebuilt for Linux from the ground
 
 ---
 
+<img width="1920" height="1080" alt="Screenshot_20260705_115419" src="https://github.com/user-attachments/assets/52cb3457-8406-43e8-bd5b-8ab0d6717b97" />
+<img width="1920" height="1080" alt="Screenshot_20260705_115337" src="https://github.com/user-attachments/assets/22a7720f-2e10-4bb9-a916-13c832eb1824" />
+<img width="1920" height="1080" alt="Screenshot_20260705_115327" src="https://github.com/user-attachments/assets/ca12ff13-07af-49e6-b4af-236e48d566bb" />
+<img width="1920" height="1080" alt="Screenshot_20260705_115319" src="https://github.com/user-attachments/assets/0d9a04bb-4fda-4cc3-8c77-2a3808e90f5d" />
+<img width="1920" height="1080" alt="Screenshot_20260705_115216" src="https://github.com/user-attachments/assets/de1cbca4-1105-44b8-9dcf-b742cd0e54f6" />
+
 ## What Fan Hub Can Control
 
 ### Motherboard fan headers
