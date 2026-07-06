@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="assets/icon.png" width="140" alt="Fan Hub"/>
+<img src="icon.png" width="140" alt="Fan Hub"/>
 
 # Fan Hub
 
