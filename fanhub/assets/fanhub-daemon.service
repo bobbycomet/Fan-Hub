@@ -1,0 +1,19 @@
+[Unit]
+Description=Fan Hub — headless fan curve daemon
+Documentation=https://github.com/yourusername/fanhub
+After=multi-user.target
+Wants=multi-user.target
+
+[Service]
+Type=simple
+# Run as root so hwmon sysfs writes succeed without udev rules
+User=root
+ExecStart=/opt/fanhub/venv/bin/python3 /opt/fanhub/fanhub_daemon.py
+ExecReload=/bin/kill -HUP $MAINPID
+Restart=on-failure
+RestartSec=5
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target
