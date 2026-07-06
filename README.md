@@ -1,259 +1,229 @@
 <div align="center">
 
-<img width="300" height="300" alt="FanHub" src="https://github.com/user-attachments/assets/14ee67b7-807e-45aa-afd0-4fa4bd42d052" />
-
+<img src="assets/icon.png" width="140" alt="Fan Hub"/>
 
 # Fan Hub
-### Linux Fan Control & RGB Management
 
-**Beta Release 1.5.2** · PyQt6 · Ubuntu/Debian · Python 3.10+
+**Linux fan control, the way it should work.**
 
-*The Windows fan curve experience, brought to Linux.*
----
+v1.5.5 · Python 3.10+ · PyQt6 · Ubuntu · Arch · Fedora · Any systemd distro
 
 </div>
 
-> **Beta Notice**
-> Fan Hub is currently in beta. It is a **monitoring and control tool only;** it does not write any configuration files to your system, does not modify your BIOS, and does not persist any changes between reboots unless you explicitly save a profile. Fan speeds return to motherboard auto-control when you close the application (you are asked). Your hardware is safe. As long as the system tray is open, your fans are on the profile you set. For quick thermal checks, just hover over the system tray icon.
+---
 
-Names and icons are owned by Griffin Linux (Griffin, Griffin Talon edition). [Griffin](https://bobbycomet.github.io/Griffin-Linux-Landing-Page)
-This will be integrated into Grix, another Griffin tool for system health. [Grix](https://github.com/bobbycomet/Grix-Preview)
-[Join the Fan Hub beta](https://www.patreon.com/posts/fan-hub-beta-155467460?utm_medium=clipboard_copy&utm_source=copyLink&utm_campaign=postshare_creator&utm_content=join_link)
+## Why Fan Hub Exists
+
+On Windows, fan control is solved. **Argus Monitor**, **FanControl**, **HWiNFO**, and **NZXT CAM** give you a graphical interface where you draw a temperature-to-speed curve, assign it to a fan, save it as a profile, and forget about it. The software runs in the background, the curves stay active at boot, and everything just works.
+
+On Linux, none of that existed.
+
+The traditional Linux answer has been to edit `/etc/fancontrol`, run `pwmconfig` in a terminal, and restart a service. That tool hasn't had a graphical interface in decades. It doesn't support GPU fans, AIO coolers, USB fan hubs, or modern SuperIO chips out of the box. It requires root for every write. There is no profile system, no live temperature display, and no curve editor.
+
+Fan Hub is the Windows fan control experience, rebuilt for Linux from the ground up:
+
+- Draw fan curves visually, see the current temperature moving along them in real time
+- One background daemon keeps your curves active at boot and when the app is closed
+- GPU fans, AIO pumps, USB hubs, and motherboard headers all in one place
+- Profiles you can save, load, export as JSON, and share
+- A guided setup wizard on first launch, so nothing requires reading documentation
+- One-click diagnostics with "Fix It" buttons that handle permissions and modules
 
 ---
 
-## What Is Fan Hub?
+## What Fan Hub Can Control
 
-If you have ever used **Argus Monitor**, **FanControl**, **NZXT CAM**, or **SpeedFan** on Windows, Fan Hub is the Linux equivalent. It gives you a real graphical interface to:
+### Motherboard fan headers
 
-- **See your temperatures** — CPU, GPU, chipset, NVMe, and more, all live
-- **Control your fan speeds** — manually or with smooth custom curves tied to temperature
-- **Control RGB lighting** — through OpenRGB, for any compatible device
-- **Manage AIO coolers** — pump speed, radiator fans, and liquid cooling RGB
+Any 3-pin or 4-pin fan plugged into a SYS\_FAN, CHA\_FAN, CPU\_FAN, or PUMP header is controllable if the board's SuperIO chip is supported by the kernel. Common chips:
 
-Most Linux systems have no easy way to do any of this without editing config files or running terminal commands. Fan Hub wraps all of that into a single application that any desktop user can operate.
-
----
-
-## What Fan Hub Does (and Does Not Do)
-
-### ✅ What it does
-
-- Reads live temperatures from your CPU, GPU, motherboard sensors, NVMe drives, and more
-- Shows fan speeds (RPM) for every fan connected to a motherboard header
-- Lets you set fan speeds manually with a slider, or draw custom temperature-to-speed curves
-- Applies those curves automatically in the background, adjusting fan speed as temperatures change
-- Saves your settings as named profiles (Silent, Gaming, Work, etc.) that you can switch between instantly
-- Controls RGB lighting on compatible devices through OpenRGB
-- Controls AIO liquid coolers (NZXT Kraken, Corsair Hydro, and others) through liquidctl
-- Warns you on startup if any fans are showing 0 RPM, and explains why that might be happening
-- connects to the OpenRGB server, so OpenRGB just needs to be set up, and the server active, Fan Hub handles the rest
-
-### ❌ What it does not do
-
-- **Does not write any files to your system** outside of its own config folder (`~/.config/fanhub/`)
-- **Does not modify your BIOS** or UEFI settings
-- **Does not persist fan speed changes** after the app closes — fans return to auto when you exit
-- **Does not control fans that are not connected to a motherboard header** (see the Fan Compatibility section)
-- **Cannot control generic/budget RGB fans** that have their own internal controller (Apevia, most no-name case fans) — those require proprietary software that does not exist for Linux
-
----
-
-## Screenshots/Interface Overview
-
-Fan Hub has seven tabs across the top:
-
-| Tab | What it shows |
+| Chip family | Boards |
 |---|---|
-| **Dashboard** | Live temperature gauges, fan RPM cards, scrolling history chart, liquid cooling summary |
-| **Fan Control** | Per-fan speed sliders, mode selection, curve assignment |
-| **Fan Curves** | Visual curve editor — draw your own temperature-to-speed curves |
-| **RGB Lighting** | OpenRGB device control, color pickers, effects, temperature-reactive mode |
-| **Liquid / AIO** | AIO cooler fan and pump control via liquidctl |
-| **Profiles** | Save and load complete configurations |
-| **Settings** | Poll interval, safety thresholds, OpenRGB connection, permissions |
+| Nuvoton NCT6775/NCT6798 and variants | Most ASUS, Gigabyte |
+| ITE IT87xx and variants | Most MSI, ASRock |
+| Fintek F71xxx | Some older boards |
 
-<img width="1920" height="1080" alt="Screenshot_20260412_174321" src="https://github.com/user-attachments/assets/19352ad6-64e4-4833-8b1b-89396accd7d3" />
-<img width="1920" height="1080" alt="Screenshot_20260412_174251" src="https://github.com/user-attachments/assets/36496718-6859-4f23-93c5-0b78cc7eeb23" />
-<img width="1920" height="1080" alt="Screenshot_20260412_174227" src="https://github.com/user-attachments/assets/a09c7530-0396-4e06-94e4-ac4d21268044" />
-<img width="1920" height="1080" alt="Screenshot_20260412_174156" src="https://github.com/user-attachments/assets/855c5f6c-ce35-4aae-849e-c866347bab7f" />
-<img width="1920" height="1080" alt="Screenshot_20260412_174148" src="https://github.com/user-attachments/assets/3af0e9b0-a73f-4adf-a8d7-13d160777f63" />
-<img width="1920" height="1080" alt="Screenshot_20260412_174118" src="https://github.com/user-attachments/assets/2d8926d1-92fe-486d-a385-ffa3acef3748" />
-<img width="1920" height="1080" alt="Screenshot_20260412_174106" src="https://github.com/user-attachments/assets/6385648f-a677-4a91-8239-2052e3ce36a5" />
+If your fans appear in `sensors` output, Fan Hub can control them.
 
-Below are some tests on a machine with Daisy Chain fans; they will not appear in the fans at all (this is not a limitation of Fan Hub, it is due to the fans having their own controller and not hooked up to sys_fan1), just the CPU, but it is working as intended, thus far. I will be testing on laptops and another desktop soon. Also, some name changes on fans and hardware, to better understand what sensors are being monitored. Still working on the GPU fans, as for some reason they are not wanting to speed up. I will update when it is closer to being ready for launch.
+### GPU fans
 
-<img width="1920" height="1080" alt="Screenshot_20260420_084750" src="https://github.com/user-attachments/assets/6d7061dc-cbbf-4eab-afe8-9813ae77a2f7" />
-<img width="1920" height="1080" alt="Screenshot_20260420_084729" src="https://github.com/user-attachments/assets/62218556-99be-4c15-900d-0f4cf51a1d1f" />
-<img width="1920" height="1080" alt="Screenshot_20260420_084710" src="https://github.com/user-attachments/assets/6fc8dddf-5bfb-43c2-813f-eb93bc92d228" />
-<img width="1920" height="1080" alt="Screenshot_20260420_084838" src="https://github.com/user-attachments/assets/7457b414-0f83-4638-8a21-3bc5a3421901" />
-<img width="1920" height="1080" alt="Screenshot_20260420_084829" src="https://github.com/user-attachments/assets/c58e9213-6fb4-4940-9e89-4cf59e41ac02" />
-<img width="1920" height="1080" alt="Screenshot_20260420_084813" src="https://github.com/user-attachments/assets/7c415cd7-9a4d-4a2e-8187-f0920caef909" />
+| Vendor | Temperature | RPM | Speed control |
+|---|---|---|---|
+| AMD (amdgpu) | ✓ | ✓ | ✓ Full PWM via hwmon |
+| NVIDIA | ✓ | ✓ via fan_input | ✓ via CoolBits or nvidia-settings |
+| Intel Arc (xe) | ✓ | — | — Driver managed |
+| Intel iGPU (i915) | ✓ | — | — Firmware managed |
+
+NVIDIA GPU fans default to the **Performance** curve automatically. If CoolBits is not enabled, Fan Hub reads the fan percentage from nvidia-smi and shows it honestly as a percentage rather than pretending it has RPM data.
+
+### AIO coolers and USB hubs (via LiquidCtl)
+
+This feature should work, but it is untested, as I do not own any AIO coolers or such to test this with. 
+
+Fan Hub uses the **liquidctl Python API** directly, not the CLI, for lower latency and type-safe status reads. Supported families include:
+
+- NZXT Kraken X/Z (all generations), Kraken 2023/2024
+- Corsair Hydro Platinum, Pro XT, Elite RGB, iCUE Elite Capellix
+- EVGA CLC
+- Aquacomputer D5 Next, Octo, Quadro, Farbwerk 360
+- Corsair Commander Pro, Commander Core/Core XT/ST
+- NZXT Smart Device V1/V2, Grid+ V3, RGB & Fan Controller
+- Lian Li GA II LCD, Uni SL/AL/SL-Infinity
+- NZXT E-series PSUs (monitoring only)
+
+### What Fan Hub cannot control
+
+- **Fans with internal controllers** — budget RGB fans (Apevia, Rosewill, no-name) that plug into a Molex or SATA power connector and manage their own speed internally have no connection to the motherboard's PWM system
+- **2-pin Molex fans** — always full voltage, no tachometer, no control
+- **Daisy-chained fans on a single header** — appear as one channel, all spin together; this is hardware behaviour
+- **Intel integrated GPU fans** — managed entirely by the driver and firmware stack
+
+Every uncontrollable fan in the Fan Control tab has a **?** button that explains the specific reason for that fan and what (if anything) can be done about it.
 
 ---
 
-## Getting Started
+## Interface
 
-### Step 1 — Install Fan Hub
+### Dashboard
+
+Live temperature gauges for every sensor on the system — CPU cores, GPU edge and junction, NVMe composite, chipset, ambient. Each gauge has a configurable warning threshold (yellow) and critical threshold (red). A scrolling history chart shows the last 60 seconds. Fan RPM cards show current speed and a percentage bar.
+
+### Fan Control
+
+One card per detected fan. Each card shows the fan label, chip source, current RPM (or percentage for fans without a tachometer), a live speed bar, and a mode selector:
+
+- **Auto** — restore the hardware's built-in automatic control
+- **Curve** — drive from a named fan curve based on temperature
+- **Fixed %** — set a constant duty cycle and leave it
+- **Manual slider** — drag to any speed for immediate testing
+
+GPU fans show a coloured badge: green for NVIDIA, red for AMD, blue for Intel.
+
+### Fan Curves
+
+A canvas editor where you click to add control points, drag to reshape the curve, and right-click to remove points. The canvas shows:
+
+- The curve line from 0°C to 100°C on the X axis, 0–100% speed on the Y axis
+- A **live vertical temperature marker** — a line at the current temperature with a dot on the curve showing the speed being commanded right now, updated every poll cycle
+- Dragged points are tracked by identity before sorting, so the drag never jumps to the wrong point
+
+Each curve has a sensor selector (specific sensor, highest of all, or average), a blend mode (Highest / Average / Weighted), hysteresis, minimum speed, and fan-stop threshold. Fan-stop bypasses the minimum speed clamp, so the fan actually reaches zero.
+
+Six built-in presets: **Silent**, **Balanced**, **Performance**, **Gaming**, **Full Speed**, **Fixed 30%**.
+
+### Profiles
+
+Named configurations that save the complete curve assignment and fixed speed state. The Profiles tab has:
+
+- Save, Load, Delete, Duplicate
+- **Export** — saves the selected profile as a `.json` file
+- **Import** — reads a `.json` profile, prompting to overwrite if the name exists
+- Quick-apply preset buttons that apply a curve family to all fans in one click
+
+Profiles are plain JSON and are human-readable and shareable.
+
+### RGB Lighting
+
+OpenRGB SDK integration. Connects to a running OpenRGB server, lists all detected devices with their LED count and type, and lets you set colours and effects. Temperature-reactive mode changes colour based on the hottest sensor, from blue at cool, through yellow, to red at the warning threshold.
+
+### Liquid / AIO
+
+Per-device panels for every LiquidCtl device show pump speed, fan speeds, liquid temperature, and controls for pump mode and fan speed. Initialise and re-initialise without leaving the app.
+
+### Settings
+
+Poll interval (250ms–10s), temperature unit (°C/°F), safe mode (never command below rated minimum RPM), emergency temperature (all fans jump to 100% with a tray alert), global hysteresis, system tray enable/disable, start minimised, OpenRGB host and port, and the background daemon toggle.
+
+The **daemon section** shows live status from systemd (`● Running — enabled at startup`, `◑ Enabled but stopped`, `○ Stopped`, `⚠ Not installed`) and has Start / Stop / Reload Curves buttons for immediate control without saving settings.
+
+---
+
+## Background Daemon
+
+The daemon (`fanhub-daemon`) is a headless `QCoreApplication` — not the full GUI — that loads config, starts the polling worker, and applies fan curves continuously. It has no windows and uses no display.
+
+Enable it in **Settings → Background Daemon**. Once enabled:
+
+- It starts immediately and at every boot via systemd
+- It applies to whichever profile was active when you last saved
+- When you change curves or load a profile in the GUI, Fan Hub saves the new state to config and sends `SIGHUP` to the daemon — it reloads within one poll cycle without restarting
+- When you close the app to the tray, curves are saved first so the daemon stays current
+- When you quit the app entirely, curves are saved before exit
+
+The daemon restores all fans to automatic mode on `SIGTERM` (clean shutdown or `systemctl stop`).
+
+---
+
+## Permissions
+
+Fan Hub uses a **dedicated `fanhub` group** rather than world-writable sysfs entries or always-on root. The installer creates the group, adds your user to it, and writes targeted udev rules:
+
+```
+KERNEL=="pwm[0-9]*",        SUBSYSTEM=="hwmon", GROUP="fanhub", MODE="0660"
+KERNEL=="pwm[0-9]*_enable", SUBSYSTEM=="hwmon", GROUP="fanhub", MODE="0660"
+```
+
+Only PWM and PWM-enable files get group write access. Temperature inputs, voltage readings, and everything else in hwmon stay read-only for normal users.
+
+After installation, log out and back in for group membership to take effect. If you need fan control immediately without logging out: `sudo fanhub` or `newgrp fanhub` in the current shell.
+
+The AppImage version shows a setup dialog on first launch and runs the installer via `pkexec` — GUI password prompt, no terminal.
+
+---
+
+## Installation
+
+### From the tarball (recommended)
 
 ```bash
-tar -xzf fanhub_v1.5c.tar.gz
+tar -xzf fanhub_v1.5.5.tar.gz
 cd fanhub
 sudo ./install.sh
 ```
 
-The installer handles everything: system packages, Python environment, udev rules, so you can write fan speeds without root, kernel module loading, and a desktop entry so Fan Hub appears in your app menu.
+Log out and back in, then run `fanhub`.
 
-### Step 2 — Run it
-
-```bash
-sudo fanhub
-```
-
-> **Why sudo?** Writing fan speeds to the hardware requires root access on most systems. After the installer runs and you log out and back in, you may be able to run it without sudo; it depends on your motherboard and udev configuration. The Settings tab has a button to copy the correct udev rule to your clipboard. If beta goes well, pkexec will be used.
-
-### Step 3 — Check your fans
-
-On first launch, Fan Hub shows a **Fan Check** dialog. This lists every fan it can see and flags any that are reading 0 RPM. Read it. It tells you whether your fans are wired in a way that Fan Hub can control them.
-
-### Step 4 — Set up RGB (optional)
-
-RGB control requires OpenRGB to be installed and its server to be running. See the **OpenRGB Setup** section below.
-
----
-
-## Fan Compatibility
-
-Not all fans can be controlled. Here is a plain-English guide:
-
-### Fans that Fan Hub CAN control
-
-- Any **3-pin or 4-pin fan** plugged directly into a **SYS_FAN**, **CHA_FAN**, or **CPU_FAN** header on your motherboard
-- Fans connected through a **Corsair Commander Pro** or **Commander Core** (via the Liquid/AIO tab)
-- Fans connected through an **NZXT Smart Device** or **Grid+** (via the Liquid/AIO tab)
-- **AIO cooler radiator fans** and **pump** (NZXT Kraken, Corsair Hydro H-series, EVGA CLC, and others)
-- **Laptop fans** on supported models (ThinkPad, some ASUS, some Dell)
-- **Molex fans** if they use a Molex-to-3pin or Molex-to-4pin adapter plugged into a SYS_FAN header
-
-### Fans that Fan Hub CANNOT control
-
-- **Generic budget fans** (Apevia Cosmos, Rosewill, most no-name RGB case fans) that have their own internal hub/controller. These fans plug into a USB header or proprietary connector — not SYS_FAN — and use software that has no Linux equivalent. Fan Hub will detect that they exist on the RGB side through OpenRGB if they are supported, but cannot adjust their speed.
-- **2-pin Molex-only fans** — these run at full voltage always; there is no speed control
-- **Fans connected only to an RGB/ARGB header** — Fan Hub can control their color but not their speed
-- **Daisy-chained fans** plugged into a single header act as one channel — Fan Hub controls them all together at the same speed, which is the correct behavior
-
-### What to do if your fan shows 0 RPM
-
-1. Make sure the fan is physically spinning (open the case and look)
-2. Check that the speed cable (3-pin or 4-pin connector) is plugged into a SYS_FAN header — not just a power connector
-3. Try loading a kernel module: `sudo modprobe nct6775` or `sudo modprobe it87`
-4. Some fan headers only show RPM when the fan is actually moving — if a fan is stopped because temperatures are low, 0 RPM is correct
-
----
-
-## OpenRGB Setup
-
-OpenRGB is a separate application that Fan Hub uses for RGB control. It is not built into Fan Hub.
-
-### Installing OpenRGB
-
-**Option A — AppImage:**
-```bash
-# Download from https://openrgb.org
-# Fan Hub will find it automatically in ~/Downloads, ~/Applications, or ~/bin
-# Any version name works — you don't need to rename it
-chmod +x OpenRGB*.AppImage
-```
-
-**Option B — .deb package:**
-```bash
-# Download .deb from https://openrgb.org
-sudo dpkg -i openrgb_*.deb
-```
-
-### Starting the OpenRGB server
-
-Fan Hub connects to the OpenRGB SDK server. You need to start it before opening Fan Hub (or click Reconnect in the RGB tab after starting it), You can close OpenRGB once the server is connected in Fan Hub:
+### From the AppImage
 
 ```bash
-# AppImage:
-./OpenRGB*.AppImage --server --server-port 6742 &
-
-# System install (deb):
-openrgb --server --server-port 6742 &
+chmod +x FanHub-1.5.5-x86_64.AppImage
+./FanHub-1.5.5-x86_64.AppImage
 ```
 
-### Connecting in Fan Hub
+On first launch, a setup dialog detects missing system components and installs them via `pkexec`. The AppImage bundles Python, PyQt6, and all dependencies — nothing needs to be installed system-wide to run the app.
 
-Go to the **RGB Lighting** tab. The status bar at the top shows whether Fan Hub is connected to OpenRGB. If it is not:
+### Build the AppImage yourself
 
-1. Make sure the server is running (command above)
-2. If the binary is not auto-detected, use the **Browse…** button to point to your AppImage
-3. Click **Reconnect**
+```bash
+cd fanhub
+./build_appimage.sh
+```
 
-The tab auto-checks the connection every 5 seconds, so once the server starts, it will connect on its own without needing a manual reconnect. Once connected, you can control OpenRGB settings in Fan Hub.
-
-### What OpenRGB can control
-
-OpenRGB works with most major RGB brands: ASUS Aura Sync, Gigabyte RGB Fusion, MSI Mystic Light, ASRock Polychrome, Corsair iCUE-compatible devices, NZXT HUE 2, and hundreds of others. Check the OpenRGB device compatibility list at [openrgb.org](https://openrgb.org) for your specific hardware.
+Requires `python3`, `rsync`, and `curl`. Downloads `appimagetool` automatically. Produces `FanHub-1.5.5-x86_64.AppImage`.
 
 ---
 
-## Fan Curves
+## First Run
 
-Fan curves let you define exactly how fast each fan should spin at each temperature. Instead of a single fixed speed, the fan gradually speeds up as things get hotter and slows down as they cool off.
+Fan Hub shows a **four-step guided setup wizard** the first time it opens:
 
-### Built-in presets
+1. **Welcome** — explains what's about to happen
+2. **Hardware scan** — shows every detected fan with ✓ controllable / ○ read-only status and current RPM
+3. **Choose a curve** — four preset cards with descriptions; selecting one assigns it to all controllable fans immediately
+4. **Done** — confirms what was applied, shows tips for next steps
 
-| Preset | What it does |
-|---|---|
-| **Silent** | Fans stop below 35°C, very quiet up to ~55°C, ramps up after that |
-| **Balanced** | Moderate speeds across the range, good for everyday use |
-| **Performance** | Fans start faster and ramp up earlier |
-| **Gaming** | Higher baseline, aggressive ramp at 70°C+ |
-| **Full Speed** | 100% always — maximum cooling, maximum noise |
-| **Fixed 30% / 50%** | Constant speed regardless of temperature |
-
-### Drawing your own curve
-
-Go to the **Fan Curves** tab. Click anywhere on the graph to add a point. Drag points to adjust them. Right-click a point to remove it. You can also set:
-
-- **Which temperature sensor drives the curve** — CPU temp, GPU temp, or "use the highest reading"
-- **Hysteresis** — how many degrees the temperature must change before the fan speed changes. Prevents the fan from rapidly oscillating when the temperature bounces around
-- **Minimum speed** — the fan will never go below this percentage, even at low temperatures
-- **Fan stop temperature** — below this temperature, the fan turns off completely (zero RPM)
-
-### Assigning a curve to a fan
-
-Go to **Fan Control**, find the fan you want, and choose a curve from the **Curve** dropdown. The curve runs in the background automatically.
+The wizard is skippable. It sets `first_run_done: true` in the config so it never appears again.
 
 ---
 
-## Profiles
+## Running Tests
 
-Profiles save your entire configuration — which curves are assigned to which fans, fixed speeds, and RGB settings — under a name. Switch between them instantly.
+```bash
+cd /opt/fanhub
+python3 -m unittest tests.test_fan_curves tests.test_app_state tests.test_hardware_monitor -v
+```
 
-**Example profiles you might create:**
-- **Silent Night** — everything at minimum, fan stop enabled
-- **Work** — balanced, quiet enough to focus
-- **Gaming** — aggressive cooling, RGB at full color
-- **Rendering** — maximum cooling for long CPU/GPU jobs
-
-Profiles are saved to `~/.config/fanhub/profiles/`. They are plain JSON files — you can back them up, share them, or edit them manually if you want.
-
----
-
-## Laptop Support
-
-Fan Hub works on laptops for temperature monitoring and fan reading on many models. Full fan speed control depends on the laptop and kernel driver:
-
-- **ThinkPad** — good support via `thinkpad_acpi` kernel module
-- **ASUS** — partial support via `asus-nb-wmi`
-- **Dell** — partial support via `dell_smm`
-- **HP** — limited support
-- **Most others** — temperature reading works; fan control may not
-
-If your laptop fans show up but cannot be controlled, the motherboard firmware likely manages them directly and does not expose PWM control through the kernel. This is very common on laptops and is a hardware/firmware limitation, not a Fan Hub limitation.
+90 tests, all pure logic — no real hardware, no display, no network. Fast enough to run on every code change.
 
 ---
 
@@ -261,278 +231,287 @@ If your laptop fans show up but cannot be controlled, the motherboard firmware l
 
 # Technical Reference
 
-*Everything below is for advanced users, developers, and people who want to understand exactly how Fan Hub works.*
-
----
-
-## Architecture
+## Architecture overview
 
 ```
 fanhub/
-├── main.py                      Entry point, icon loading, stylesheet
+├── main.py                         Entry point, QApplication, stylesheet, platform detection
+├── fanhub_daemon.py                Headless daemon — QCoreApplication, no windows
+├── build_appimage.sh               AppImage builder (bundles Python venv + source)
+├── install.sh                      System installer (group, udev, modules, systemd, venv)
 ├── core/
-│   ├── app_state.py             Config persistence (~/.config/fanhub/)
-│   ├── hardware_monitor.py      hwmon sysfs reader/writer + GPU temp backends
-│   ├── fan_curves.py            Curve interpolation, hysteresis, presets, engine
-│   ├── rgb_manager.py           OpenRGB SDK + CLI integration, binary discovery
-│   ├── liquidctl_manager.py     liquidctl AIO/hub control
-│   └── polling_worker.py        QThread background loop, curve application
+│   ├── app_state.py                Config persistence, atomic write
+│   ├── app_context.py              Shared context object injected into all tabs
+│   ├── daemon_controller.py        All systemd interactions for fanhub-daemon
+│   ├── fan_curves.py               FanCurve, CurveEngine, BlendMode, presets
+│   ├── hardware_monitor.py         hwmon reader/writer, GPU backends
+│   ├── liquidctl_manager.py        liquidctl Python API with CLI fallback
+│   ├── rgb_manager.py              OpenRGB SDK + CLI
+│   ├── polling_worker.py           QThread background loop, staggered polling
+│   └── sleep_monitor.py            D-Bus PrepareForSleep listener
 └── ui/
-    ├── main_window.py           Main window, tab host, tray, emergency controls
-    ├── dashboard_tab.py         Live gauges (FlowLayout), history chart
-    ├── fan_control_tab.py       Per-fan sliders, mode, curve assignment
-    ├── fan_curves_tab.py        Interactive SVG-like canvas curve editor
-    ├── fan_warning_dialog.py    Startup 0-RPM warning + compatibility guide
-    ├── rgb_tab.py               OpenRGB tab with live status bar
-    ├── liquid_tab.py            liquidctl device panels
-    ├── profiles_tab.py          Profile save/load/manage
-    └── settings_tab.py          App-wide settings
+    ├── main_window.py              Main window, tray, first-run trigger, daemon wiring
+    ├── appimage_setup_dialog.py    AppImage system integration dialog (pkexec install)
+    ├── first_run_wizard.py         Four-step guided setup wizard
+    ├── hardware_summary_dialog.py  Live diagnostics + Fix It buttons
+    ├── dashboard_tab.py            Gauges, history chart, fan RPM cards
+    ├── fan_control_tab.py          Per-fan cards, mode selector, Why? button
+    ├── fan_curves_tab.py           Canvas curve editor, live temp/speed overlay
+    ├── fan_warning_dialog.py       Startup 0-RPM warning (motherboard fans only)
+    ├── profiles_tab.py             Profile CRUD, import/export
+    ├── settings_tab.py             Settings form, daemon toggle
+    ├── rgb_tab.py                  OpenRGB device list and controls
+    └── liquid_tab.py               liquidctl device panels
 ```
 
-## Hardware Backends
+## Core subsystems
 
-### hwmon sysfs (`/sys/class/hwmon`)
+### HardwareMonitor (`core/hardware_monitor.py`)
 
-The primary backend. Fan Hub reads every `hwmon*` directory and maps:
+Discovers and reads all hwmon nodes under `/sys/class/hwmon/hwmon*`. For each node it reads the `name` file to identify the chip, then discovers fan inputs (`fan*_input`), PWM outputs (`pwm*`), PWM enable files (`pwm*_enable`), and temperature inputs (`temp*_input`).
 
-| sysfs file | Purpose |
-|---|---|
-| `fanN_input` | Current fan RPM |
-| `pwmN` | PWM duty cycle (0–255) |
-| `pwmN_enable` | `0`=DC, `1`=PWM manual, `2`=PWM auto |
-| `tempN_input` | Temperature in millidegrees C |
-| `tempN_crit` | Critical threshold |
-| `tempN_max` | High threshold |
-| `fanN_label` | Human-readable name |
+Fan classification uses the chip name against known chip sets:
 
-Fan paths are stored at discovery time and read directly — no path reconstruction at runtime.
-
-### NVIDIA GPU temperatures
-
-Reads via `nvidia-smi --query-gpu=temperature.gpu --format=csv,noheader,nounits`. Called every poll cycle. Requires the NVIDIA proprietary driver.
-
-### AMD GPU temperatures
-
-Reads via `rocm-smi --showtemp --json`. Requires ROCm. AMD GPU temperature is also available through hwmon via the `amdgpu` kernel driver without ROCm.
-
-### liquidctl
-
-Used for USB-connected fan controllers and AIO coolers. Fan Hub calls the `liquidctl` CLI (JSON output mode with text fallback) to read status and send control commands. Devices are auto-discovered via `liquidctl list`.
-
-**Supported device families (partial list):**
-
-| Device | Fan | Pump | RGB |
-|---|---|---|---|
-| NZXT Kraken X/Z/Elite | ✓ | ✓ | ✓ |
-| Corsair Hydro H60/H100/H115/H150 | ✓ | — | ✓ |
-| Corsair Commander Pro | ✓ | — | ✓ |
-| NZXT Smart Device 2 / Grid+ | ✓ | — | ✓ |
-| EVGA CLC | ✓ | — | — |
-| Aqua Computer devices | ✓ | ✓ | ✓ |
-
-Full list: [liquidctl supported devices](https://github.com/liquidctl/liquidctl#supported-devices)
-
-### OpenRGB
-
-Fan Hub connects to the OpenRGB SDK server over TCP (default: `localhost:6742`). It uses the `openrgb-python` SDK when available, falling back to the CLI with `--server-host` and `--server-port` flags.
-
-**Binary discovery order:**
-1. System `PATH` (deb install → `/usr/bin/openrgb`)
-2. `dpkg -L openrgb` (deb installed but not on PATH)
-3. Any file containing `openrgb` (case-insensitive) in: `~/Downloads`, `~/Applications`, `~/.local/bin`, `~/bin`, `~/Desktop`, `/opt`, `/usr/local/bin`
-4. Flatpak (`org.openrgb.OpenRGB`)
-5. Snap (`/snap/bin/openrgb`)
-
-The AppImage filename does not matter — `OpenRGB_1.0rc2_x86_64_0fca93e.AppImage` and `openrgb-latest.AppImage` are both found automatically.
-
-## Fan Curve Engine
-
-### Interpolation
-
-Curves are piecewise linear between control points, sorted by temperature. For a given temperature:
-
-```
-ratio = (temp - point[i].temp) / (point[i+1].temp - point[i].temp)
-speed = point[i].speed + ratio * (point[i+1].speed - point[i].speed)
+```python
+_AMD_GPU_CHIPS    = {'amdgpu', 'radeon'}
+_NVIDIA_GPU_CHIPS = {'nvidia'}
+_INTEL_GPU_CHIPS  = {'i915', 'xe'}
 ```
 
-Speed is clamped to `[min_speed, max_speed]`. If `stop_below` is set and `temp < stop_below`, speed is forced to 0.
+For NVIDIA fans, the monitor checks whether `pwm1` is writable (CoolBits path) and whether `nvidia-settings` is available. It reads RPM from `fan*_input` when the file exists, regardless of the PWM control path — `nvidia_use_hwmon` controls writing only, not reading.
 
-### Hysteresis
+For AMD GPU temperatures not exposed via hwmon, `_refresh_amd_rocm_temps()` calls `rocm-smi --showtemp --json` on every poll cycle.
 
-Prevents rapid fan oscillation when temperature fluctuates around a boundary:
+PWM auto-mode values differ by chip family:
+- `nct6775` and related: `pwm*_enable = 2` for auto, `1` for manual
+- `it87` family: `pwm*_enable = 0` for auto (SmartGuardian), `1` for manual
 
-- If `|target - last| < hysteresis × 0.5` → hold current speed (no change)
-- If `target > last` → apply fully (respond quickly to heating)
-- If `target < last` and `(last - target) < hysteresis` → hold current speed (slow to cool down)
+All sysfs writes use `_write_file()` which catches permission errors and logs them without crashing.
 
-### Application loop
+### FanCurve and CurveEngine (`core/fan_curves.py`)
 
-The `PollingWorker` QThread runs every `poll_interval_ms` (default 1000 ms):
-1. Read all hwmon temperatures
-2. Emit `sensors_updated` signal to UI
-3. For each fan with a curve assignment: compute target speed → write to `pwmN` sysfs
-4. Read all fan RPMs → emit `fans_updated`
-5. Read liquidctl device status → emit `liquid_updated`
-6. If max temp ≥ emergency threshold → emit `emergency_triggered` → set all fans to 100%
+`FanCurve` stores a list of `CurvePoint(temp, speed)` objects and interpolates linearly between them. Key behaviour:
 
-## PWM vs DC Mode Detection
+- `stop_below` returns `0.0` **before** the `max(min_speed, ...)` clamp, so the fan actually reaches zero rather than being clamped back up to `min_speed`
+- `_drive_temp(temps_dict)` selects the driving temperature based on `blend_mode`:
+  - `HIGHEST` — max of all values (or filtered by `sensor_ids`)
+  - `AVERAGE` — mean of all values
+  - `WEIGHTED` — dot product of values and `sensor_weights`
+  - Falls back to highest if the specified `sensor_id` is missing
 
-Fan Hub reads `pwmN_enable` to determine mode:
+`CurveEngine` maintains the mapping from fan IDs to curve names or fixed speeds. `compute_speed(fan_id, temps)` applies hysteresis: if the temperature change from last cycle is less than `hysteresis_global`, the last commanded speed is returned unchanged. The emergency path bypasses curves entirely and returns 100.0 when any sensor exceeds `emergency_temp`.
 
-| Value | Mode | Control method |
+`load_dict()` updates `fan_assignments` and `fixed_speeds` **in place** using `.clear()` + `.update()` rather than replacing the dict objects. This preserves external references held by other code.
+
+### PollingWorker (`core/polling_worker.py`)
+
+A `QThread` that runs a polling loop at the configured interval. Staggered schedule:
+
+| Backend | Interval | Reason |
 |---|---|---|
-| `0` | DC | Voltage control via PWM duty at DC enable |
-| `1` | PWM manual | Direct PWM duty cycle write |
-| `2` | PWM auto | Motherboard-controlled (no manual override active) |
-| file absent | Unknown | Assume DC if no PWM file, assume PWM if PWM file present |
+| hwmon sysfs | Every cycle | Pure file reads, ~microseconds |
+| nvidia-smi subprocess | Every 3 cycles | ~50ms subprocess overhead |
+| liquidctl | Every 5 cycles | USB HID round-trip latency |
 
-To enable manual control, Fan Hub writes `1` to `pwmN_enable` before writing the duty cycle. To restore auto, it writes `2`.
+The worker holds a `threading.Lock` (`_fan_lock`) that guards all `FanEntry` attribute mutations. The UI reads fan data from the same objects on the main thread, so the lock prevents torn reads.
 
-## Fan Type Classification
+After reading the hardware state, the worker calls `CurveEngine.compute_speed()` for every fan that has a curve assignment and writes the result via `HardwareMonitor.set_fan_pwm()`. Emergency override runs before curve computation and bypasses it.
 
-Each detected fan is classified by connection type using label and chip name heuristics:
+### DaemonController (`core/daemon_controller.py`)
 
-| Type constant | Meaning |
-|---|---|
-| `sys_fan` | SYS_FAN / CHA_FAN motherboard header |
-| `cpu_fan` | CPU_FAN header |
-| `chassis_fan` | Chassis fan alias |
-| `pump` | AIO pump header (W_PUMP+, AIO_PUMP) |
-| `laptop` | Laptop internal fan (detected by chip name) |
-| `usb_hub` | Corsair/NZXT USB hub channel (via liquidctl) |
-| `generic` | Uncontrollable — own internal controller |
+All `systemctl` interactions for `fanhub-daemon` in one class. Every method is safe to call on non-systemd systems — `FileNotFoundError` is caught and returns a sensible default.
 
-Laptop chips detected: `thinkpad_acpi`, `asus-nb-wmi`, `toshiba`, `dell_smm`, `applesmc`, `ideapad`, `hp-wmi`
+`DaemonStatus` is a value object with `(installed, active, enabled, no_systemd)` fields and a `summary() -> (text, css_color)` method. The Settings tab uses this directly for its status label — no status string construction in the UI layer.
 
-## Permissions & udev
+`DaemonController.reload()` sends `SIGHUP` via `systemctl kill --signal=SIGHUP fanhub-daemon`. The daemon's `SIGHUP` handler reloads config from disk and calls `ProfileManager.load_profile()` for the active profile without restarting the process or interrupting fan control.
 
-Fan Hub requires write access to `/sys/class/hwmon/hwmon*/pwm*` to control fan speeds.
+### AppContext (`core/app_context.py`)
 
-**udev rule (installed automatically by `install.sh`):**
-```
-KERNEL=="hwmon*", SUBSYSTEM=="hwmon", ACTION=="add", RUN+="/bin/chmod -R a+w /sys%p"
-```
+A `@dataclass` passed to every tab at construction time, replacing the previous pattern of walking the widget tree to find `MainWindow`:
 
-Save to `/etc/udev/rules.d/99-fanhub.rules` and run:
-```bash
-sudo udevadm control --reload-rules && sudo udevadm trigger
+```python
+@dataclass
+class AppContext:
+    state:            AppState
+    hw_monitor:       HardwareMonitor
+    curve_engine:     CurveEngine
+    profile_manager:  ProfileManager
+    on_curves_changed:    Callable[[], None]
+    on_profile_loaded:    Callable[[str], None]
+    on_tray_menu_refresh: Callable[[], None]
 ```
 
-For liquidctl USB devices, udev rules granting `uaccess` are installed for: Corsair (1b1c), NZXT (2433), Cooler Master (2516), EVGA (3842), Thermaltake (264a), Aqua Computer (0c70), MSI (0db0), ASUS (0b05).
+Tabs call `ctx.on_curves_changed()` after modifying curves. `MainWindow` wires this to `_save_curves_to_config()` which serialises the engine state, writes `config.json` atomically, and sends `SIGHUP` to the daemon.
 
-## Kernel Modules
+### AppState (`core/app_state.py`)
 
-Loaded by the installer, persisted in `/etc/modules-load.d/fanhub.conf`:
+Reads and writes `~/.config/fanhub/config.json`. All saves use `tempfile.mkstemp` + `os.replace` (atomic rename) so a crash mid-write cannot corrupt the config file. If the config is missing or unparseable, all defaults are used and a fresh config is written on next save. Unknown keys in a loaded config are preserved across saves.
 
-| Module | Used for |
-|---|---|
-| `nct6775` | Most ASUS and Gigabyte boards (SuperIO) |
-| `it87` | Most MSI and ASRock boards (ITE SuperIO) |
-| `coretemp` | Intel CPU package temperature |
-| `i2c-dev` | I2C bus access for some sensors |
+### LiquidctlManager (`core/liquidctl_manager.py`)
 
-If your fans are not detected, try loading the module manually:
-```bash
-sudo modprobe nct6775    # ASUS / Gigabyte
-sudo modprobe it87       # MSI / ASRock
-sudo modprobe nct6798    # Newer ASUS (Z790, X670)
+Uses the **liquidctl Python API** as the primary backend:
+
+```python
+from liquidctl import find_liquidctl_devices
+
+for dev in find_liquidctl_devices():
+    with dev.connect():
+        status = dev.get_status()   # returns [(key, value, unit), ...]
 ```
 
-## Config File Locations
+Status tuples are parsed into structured `fans`, `temps`, and `pump` fields without regex or JSON parsing. If the Python library is not installed or raises on import, the manager falls back to the CLI transparently — all callers see the same `LiquidDevice` interface.
 
-| Path | Contents |
-|---|---|
-| `~/.config/fanhub/config.json` | Settings, active profile name |
-| `~/.config/fanhub/profiles/` | Directory (profiles stored in config.json) |
-| `~/.config/fanhub/fanhub.log` | Application log |
-| `/opt/fanhub/` | Application files (installed by install.sh) |
-| `/usr/local/bin/fanhub` | Launcher script |
-| `/etc/udev/rules.d/99-fanhub.rules` | hwmon + USB udev rules |
-| `/usr/share/applications/fanhub.desktop` | App menu entry |
+Device capabilities (fan control, pump control, RGB) are looked up by keyword match against `KNOWN_DEVICES` — a table covering all liquidctl-supported families.
+
+## UI patterns
+
+### Tray icon
+
+`self._tray_icon` is a plain instance attribute on `MainWindow`, not a module-level global. It is parented to the `QApplication` instance so it survives the window being hidden. A `_quitting` flag prevents the close event from showing the quit dialog twice when the tray's Quit action is used.
+
+### Curve canvas
+
+`CurveEditorCanvas` (in `fan_curves_tab.py`) subclasses `QWidget` and implements `paintEvent`, `mousePressEvent`, `mouseMoveEvent`, and `mouseReleaseEvent`. Dragged points are identified by `(temp, speed)` value before the point list is sorted, then located again by closest temperature after sorting. This prevents the drag jumping to a different point when the mouse moves during a slow frame.
+
+The live temperature marker is set by `set_current_temp(temp)` called from the polling worker signal. It draws a vertical line at the current temperature and a filled circle on the curve at the interpolated speed.
+
+### FlowLayout
+
+`DashboardTab` uses a custom `FlowLayout` that wraps gauge widgets like CSS `flex-wrap`. Its `takeAt()` calls `widget.setParent(None)` before returning the item so removed widgets don't remain as invisible children of the container.
+
+### First-run and AppImage detection
+
+`main.py` checks `os.environ.get('FANHUB_APPIMAGE')` to detect AppImage execution, then checks for the udev rule and fanhub group membership. If both conditions are true, `AppImageSetupDialog` is shown before `MainWindow`. After the dialog (or if it is skipped), `MainWindow` opens and checks `state.settings.get('first_run_done')` to decide whether to show the wizard.
+
+## Config file format
+
+```json
+{
+  "settings": {
+    "poll_interval_ms": 1000,
+    "temp_unit": "C",
+    "safe_mode": true,
+    "emergency_temp": 90.0,
+    "hysteresis": 2.0,
+    "tray_icon": true,
+    "start_minimized": false,
+    "openrgb_host": "localhost",
+    "openrgb_port": 6742,
+    "daemon_enabled": false,
+    "first_run_done": true
+  },
+  "profiles": {
+    "Gaming": {
+      "name": "Gaming",
+      "curves": {
+        "fan_assignments": { "hwmon2_fan1": "gaming", "hwmon3_fan1": "performance" },
+        "fixed_speeds":    { "hwmon2_fan2": 45.0 },
+        "custom_curves": {}
+      }
+    }
+  },
+  "active_profile": "Gaming"
+}
+```
+
+## udev rules
+
+```
+# /etc/udev/rules.d/99-fanhub.rules
+
+# Grant fanhub group write access to PWM control files only
+KERNEL=="pwm[0-9]*",        SUBSYSTEM=="hwmon", ACTION=="add", GROUP="fanhub", MODE="0660"
+KERNEL=="pwm[0-9]*_enable", SUBSYSTEM=="hwmon", ACTION=="add", GROUP="fanhub", MODE="0660"
+
+# Fallback: set ownership on hwmon node add (handles kernels where
+# attribute-level udev matching does not fire for sysfs sub-entries)
+KERNEL=="hwmon[0-9]*", SUBSYSTEM=="hwmon", ACTION=="add", \
+    RUN+="/bin/sh -c 'chown root:fanhub /sys%p/pwm* 2>/dev/null; \
+                      chmod 660 /sys%p/pwm* 2>/dev/null || true'"
+
+# liquidctl USB device access
+SUBSYSTEM=="usb", MODE="0666", GROUP="plugdev"
+KERNEL=="hidraw*", SUBSYSTEM=="hidraw", MODE="0666", GROUP="plugdev"
+
+# I2C bus access (for Corsair Vengeance RGB and similar)
+KERNEL=="i2c-[0-9]*", GROUP="i2c", MODE="0660"
+```
+
+## systemd service
+
+```ini
+# /etc/systemd/system/fanhub-daemon.service
+
+[Unit]
+Description=Fan Hub headless fan curve daemon
+After=multi-user.target
+Wants=multi-user.target
+
+[Service]
+Type=simple
+User=root
+ExecStart=/opt/fanhub/venv/bin/python3 /opt/fanhub/fanhub_daemon.py
+ExecReload=/bin/kill -HUP $MAINPID
+KillMode=process
+Restart=on-failure
+RestartSec=5
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target
+```
+
+The daemon runs as root because it writes to hwmon sysfs files. `ExecReload` sends `SIGHUP`, which the daemon catches and uses to reload config without restarting. `KillMode=process` ensures `SIGTERM` reaches the main Python process directly so the `_shutdown` handler can restore fans to auto before exiting.
+
+## Test suite
+
+Three test modules, 90 tests total, all run without hardware, display, or network:
+
+**`tests/test_fan_curves.py`** — 45 tests
+- `FanCurve.interpolate()`: below/above/exact/midpoint, unsorted points, single point, empty curve
+- `stop_below` bypasses `min_speed` clamp (regression test for the v1.5.4 fix)
+- All preset curves are monotone (non-decreasing speed as temperature rises)
+- `BlendMode`: highest, average, weighted, sensor ID filtering, missing sensor fallback
+- `CurveEngine`: fixed speed, curve assignment, emergency override, hysteresis gates, round-trip serialisation, `load_dict` in-place update
+
+**`tests/test_app_state.py`** — 27 tests
+- All defaults are present on fresh state
+- Save/reload settings and profiles
+- Profile CRUD (create, read, update, delete)
+- Atomic write produces valid JSON with no stray `.tmp` files
+- Corrupted config does not crash — defaults used
+- `DaemonController` via mocks: status parsing, SIGHUP only sent when active, reload skipped when inactive, `DaemonStatus.summary()` return values
+
+**`tests/test_hardware_monitor.py`** — 18 tests
+- `_friendly_temp_label()` for all chip families: SuperIO, k10temp, coretemp, nvme, amdgpu
+- GPU chip classification: AMD/NVIDIA/Intel/unknown, case-insensitive
+- it87 auto-value is `'0'`, nct6775 auto-value is `'2'`
+- PWM enable is written before PWM value (order matters for some chips)
+- Safe-mode minimum PWM clamping
+
+---
 
 ## Dependencies
 
 | Package | Required | Purpose |
 |---|---|---|
-| `PyQt6` | **Yes** | UI framework |
-| `PyQt6-Charts` | Optional | Temperature history graph (tab shows message if missing) |
+| `PyQt6` | Yes | UI framework |
+| `PyQt6-Charts` | Optional | Temperature history graph |
 | `liquidctl` | Optional | AIO and USB hub control |
-| `openrgb-python` | Optional | OpenRGB SDK (CLI fallback available) |
+| `openrgb-python` | Optional | OpenRGB SDK |
 | `psutil` | Optional | Additional system info |
-| `Pillow` | Optional | Icon resizing at install time |
-| `lm-sensors` | Optional | Sensor detection (`sensors-detect`) |
 
-Install all optional dependencies:
 ```bash
-pip install PyQt6 PyQt6-Charts liquidctl openrgb-python psutil Pillow
+pip install PyQt6 PyQt6-Charts liquidctl openrgb-python psutil
 ```
-
-## Known Limitations (Beta)
-
-- **No autostart service** — Fan Hub must be running for curves to apply. Fans return to motherboard auto when it closes.
-- **Laptop fan control** — Highly firmware-dependent. Many laptops do not expose PWM control through the kernel at all.
-- **Generic RGB fans** — Apevia, Rosewill, and similar brands with internal controllers cannot be speed-controlled and may or may not appear in OpenRGB.
-- **AMD GPU fan control** — Temperature reading works via ROCm or hwmon. Direct AMD GPU fan curve control is not yet implemented (would require `rocm-smi` or AMDGPU sysfs writes).
-- **Wayland tray icon** — System tray icon may not appear on all Wayland compositors. The application itself works fine.
-- **Multi-GPU** — Temperature reading works for all GPUs. Fan control for secondary GPUs depends on driver exposure through hwmon.
-
-## Troubleshooting
-
-**No fans detected**
-```bash
-ls /sys/class/hwmon/*/fan*_input   # should list files
-sudo modprobe nct6775              # try loading the SuperIO module
-sudo sensors-detect                # let lm-sensors find the right module
-```
-
-**Can't write fan speeds (Permission denied)**
-```bash
-# Option 1: install udev rule (Settings tab → copy to clipboard)
-echo 'KERNEL=="hwmon*", SUBSYSTEM=="hwmon", ACTION=="add", RUN+="/bin/chmod -R a+w /sys%p"' \
-  | sudo tee /etc/udev/rules.d/99-fanhub.rules
-sudo udevadm control --reload-rules && sudo udevadm trigger
-# Option 2: just run as root
-sudo fanhub
-```
-
-**OpenRGB not connecting**
-```bash
-# Check server is running
-ss -tlnp | grep 6742
-# Start it
-./OpenRGB*.AppImage --server --server-port 6742 &
-# Check Fan Hub log
-tail -f ~/.config/fanhub/fanhub.log
-```
-
-**liquidctl device not found**
-```bash
-sudo liquidctl list               # check if device is visible
-sudo usermod -aG plugdev $USER    # add user to plugdev group, then log out/in
-liquidctl initialize              # some devices need initialization
-```
-
----
-
-## License
-
-GNU GPLv3
-
-## Contributing
-
-Fan Hub is open for contributions. Areas that would benefit most from help:
-- Testing on diverse hardware (different motherboard brands, chipsets)
-- Laptop fan control improvement
-- AMD GPU fan control
-- Additional liquidctl device testing
-- Translations
 
 ---
 
 <div align="center">
 
-*Fan Hub is not affiliated with NZXT, Corsair, OpenRGB, or any hardware manufacturer.*
-*All product names are trademarks of their respective owners.*
+Fan Hub and its visual assets are copyrighted by the Griffin Linux project. While the source code is open source, the Fan Hub name, logos, and artwork are protected and may not be reused without permission.
+
+Fan Hub is an independent project and is not affiliated with, authorized, or endorsed by NZXT, Corsair, Argus Monitor, HWiNFO, OpenRGB, or any other hardware manufacturer. All product names, logos, and brands are the property of their respective owners.
 
 </div>
