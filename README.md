@@ -514,6 +514,18 @@ pip install PyQt6 PyQt6-Charts liquidctl openrgb-python psutil
 
 ---
 
+## Community and Support
+
+- **Discord:** [Join Here](https://discord.gg/7fEt5W7DPh)
+- **Patreon (Beta Builds):** [Patreon](https://www.patreon.com/c/BobbyComet/membership)
+- **Support the Griffin Project:** [Ko-fi](https://ko-fi.com/bobby60908)
+
+<div align="center">
+  <img src="https://raw.githubusercontent.com/bobbycomet/Appify/main/Griffin-G.png" alt="Griffin Linux" width="15%"/>
+  <p><strong>Griffin Linux. Where power meets simplicity.</strong><br/>
+  Made with Windows switchers in mind. Built for everyone who wants a better PC.</p>
+</div>
+
 <div align="center">
 
 Fan Hub and its visual assets are copyrighted by the Griffin Linux project. While the source code is open source, the Fan Hub name, logos, and artwork are protected and may not be reused without permission.
