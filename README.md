@@ -514,6 +514,16 @@ pip install PyQt6 PyQt6-Charts liquidctl openrgb-python psutil
 
 ---
 
+Fan Hub is licensed under the GPLv3, and forks and derivative projects are welcome.
+
+If you build on Fan Hub, please:
+
+- Keep the GPLv3 license terms intact.
+- Give appropriate credit to the original Fan Hub project.
+- Include a link back to this repository where practical.
+
+If you're building something cool with it, I'd love to hear about it!
+
 ## Community and Support
 
 - **Discord:** [Join Here](https://discord.gg/7fEt5W7DPh)
@@ -526,9 +536,9 @@ pip install PyQt6 PyQt6-Charts liquidctl openrgb-python psutil
   Made with Windows switchers in mind. Built for everyone who wants a better PC.</p>
 </div>
 
-<div align="center">
-
-Fan Hub and its visual assets are copyrighted by the Griffin Linux project. While the source code is open source, the Fan Hub name, logos, and artwork are protected and may not be reused without permission.
+The Fan Hub and Griffin Linux names, logos, and branding are not covered by the GPL license and may not be used to imply endorsement 
+or official affiliation without permission. Forks are encouraged, but please rename and rebrand modified versions unless you've 
+received permission to use the original branding.
 
 Fan Hub is an independent project and is not affiliated with, authorized, or endorsed by NZXT, Corsair, Argus Monitor, HWiNFO, OpenRGB, or any other hardware manufacturer. All product names, logos, and brands are the property of their respective owners.
 
