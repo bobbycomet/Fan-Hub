@@ -24,6 +24,7 @@ Distros the install.sh I will include:
 | `nix` | NixOS (prints instructions to use the AppImage instead) |
 | Unknown | Any other distro — prints a warning listing what to install manually, then continues |
 
+I will be looking into runit and OpenRC as well.
 ---
 
 ## Why Fan Hub Exists
