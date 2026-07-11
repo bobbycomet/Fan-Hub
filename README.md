@@ -20,8 +20,6 @@ Distros the install.sh I will include:
 | `pacman` | Arch, Manjaro, EndeavourOS, Garuda, Artix, CachyOS |
 | `dnf` | Fedora, RHEL, CentOS Stream, Rocky, AlmaLinux, Nobara, Ultramarine |
 | `zypper` | openSUSE Tumbleweed, openSUSE Leap, SLES |
-| `xbps` | Void Linux |
-| `apk` | Alpine Linux |
 | `emerge` | Gentoo (prints instructions, doesn't auto-emerge) |
 | `nix` | NixOS (prints instructions to use the AppImage instead) |
 | Unknown | Any other distro — prints a warning listing what to install manually, then continues |
