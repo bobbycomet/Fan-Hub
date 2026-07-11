@@ -10,7 +10,21 @@ v1.5.5 · Python 3.10+ · PyQt6 · Ubuntu · Arch · Fedora · Any systemd distr
 
 </div>
 
-## **NOTICE!** If you are on anything other than Ubuntu, the AppImage may not work. Looking over the install.sh, I missed a few things. I will upload the fix soon. I do apologize. A proper `.deb` is also coming soon. For other distros other than Ubuntu, you will get a tar.gz file. I wish there was an easier way, but the install.sh will detect your current distro that uses systemd, as it only works if systemd is available. I will look into getting the AppImage working for the other distros at a later date. 
+## **NOTICE!** If you are on anything other than Ubuntu, the AppImage may not work. Looking over the install.sh, I missed a few things. I will upload the fix soon. I do apologize. A proper `.deb` is also coming soon. For other distros other than Ubuntu, you will get a tar.gz file. I wish there was an easier way, but I will make the install.sh to detect your current distro that uses systemd, as it only works if systemd is available. I will look into getting the AppImage working for the other distros at a later date. 
+
+Distros the install.sh I will include:
+
+| Package Manager | Distributions |
+|:---|:---|
+| `apt` | Ubuntu, Debian, Linux Mint, Pop!_OS, elementary, Kali, Raspberry Pi OS, Armbian, Zorin, and any ID_LIKE=debian/ubuntu derivative |
+| `pacman` | Arch, Manjaro, EndeavourOS, Garuda, Artix, CachyOS |
+| `dnf` | Fedora, RHEL, CentOS Stream, Rocky, AlmaLinux, Nobara, Ultramarine |
+| `zypper` | openSUSE Tumbleweed, openSUSE Leap, SLES |
+| `xbps` | Void Linux |
+| `apk` | Alpine Linux |
+| `emerge` | Gentoo (prints instructions, doesn't auto-emerge) |
+| `nix` | NixOS (prints instructions to use the AppImage instead) |
+| Unknown | Any other distro — prints a warning listing what to install manually, then continues |
 
 ---
 
