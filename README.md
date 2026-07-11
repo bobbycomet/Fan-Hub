@@ -10,6 +10,8 @@ v1.5.5 · Python 3.10+ · PyQt6 · Ubuntu · Arch · Fedora · Any systemd distr
 
 </div>
 
+## **NOTICE!** If you are on anything other than Ubuntu, the AppImage may not work. Looking over the install.sh, I missed a few things. I will upload the fix soon. I do apologize. A proper `.deb` is also coming soon. For other distros other than Ubuntu, you will get a tar.gz file. I wish there was an easier way, but the install.sh will detect your current distro that uses systemd, as it only works if systemd is available. I will look into getting the AppImage working for the other distros at a later date. 
+
 ---
 
 ## Why Fan Hub Exists
