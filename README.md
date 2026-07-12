@@ -24,7 +24,10 @@ Distros the install.sh I will include:
 | `nix` | NixOS (prints instructions to use the AppImage instead) |
 | Unknown | Any other distro — prints a warning listing what to install manually, then continues |
 
-I will be looking into runit and OpenRC as well.
+I will be looking into runit and OpenRC as well. 
+
+**Update:** If this is still up, I am still working on it. My other updates are on hold until I have tested that the issues are fixed. I have run into some issues, but once I get that sorted, trying to add `runi` and `OpenRC`, changing names in the temperature cards (better clarity on what the temps represent instead of Motherboard 1), and building and installing the `deb` file introduced some regressions that are now being worked on. To explain how it works now, the `install.sh` file will check what init system you run, and if it is not `systemd`, `runit`, or `OpenRC`, then it falls into the unknown category. A new checking system to see if there is an update for `OpenRGB` and `Fan Hub`. I am also looking into a polkit install button in the `appimage` because it may work on my system, but if it fails on yours, there is a fallback. A newer mode feature lets you know if you are in `Normal` or `Emergency` mode, and the emergency 100% button became `Activate Emergency mode` for more clarity on what that button does. Since newer features were added, the version will be bumped to 1.6.0 due to multiple updates to the workflow, better clarity, upgrade support for `OpenRGB` and `FanHub`, init system check in the tar.gz's `install.sh`, and dashboard errors after the temp card updates.
+
 ---
 
 ## Why Fan Hub Exists
