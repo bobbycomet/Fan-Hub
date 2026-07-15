@@ -21,6 +21,8 @@ IMPORTANT
  
  **The Symptom:** This race condition can cause the CPU fan to unexpectedly jump from 100% back to 50% every 60 seconds, accompanied by spammed emergency warnings.
  **The Plan:** I am actively debugging this timing conflict right now. It will be fully resolved before the official **1.6.0** release. 
+
+I already tested that turning off the daemon actually fixed the issue with the warnings.
  
  All other major 1.6.0 upgrades, including the new multi-distro `install.sh`, more readable temperature card labels, automated update checking, and multi-init system support (`systemd`, `runit`, `OpenRC`), are working. 
 
