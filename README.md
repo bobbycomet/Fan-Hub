@@ -10,23 +10,21 @@ v1.5.5 · Python 3.10+ · PyQt6 · Ubuntu · Arch · Fedora · Any systemd distr
 
 </div>
 
-## **NOTICE!** If you are on anything other than Ubuntu, the AppImage may not work. Looking over the install.sh, I missed a few things. I will upload the fix soon. I do apologize. A proper `.deb` is also coming soon. For other distros other than Ubuntu, you will get a tar.gz file. I wish there was an easier way, but I will make the install.sh to detect your current distro that uses systemd, as it only works if systemd is available. I will look into getting the AppImage working for the other distros at a later date. 
+## Important 1.6.0 Pre-Release Notice
 
-Distros the install.sh I will include:
+IMPORTANT
+**Fixed, but a New Temporary Bug Popped Up**
+ 
+**The Good News:** The previous packaging conflict between the `.deb` package and the `appimage` (which handles `polkit` and `udev` rules) in 1.5.5 has been resolved using an automated `--install` hook for the AppImage.
+ 
+**The Active Issue:** This packaging fix unfortunately introduced a race condition bug. Emergency Mode is incorrectly triggering due to a state conflict between the Fan Curve editor, the Fan Control tab overrides, and the background daemon.
+ 
+ **The Symptom:** This race condition can cause the CPU fan to unexpectedly jump from 100% back to 50% every 60 seconds, accompanied by spammed emergency warnings.
+ **The Plan:** I am actively debugging this timing conflict right now. It will be fully resolved before the official **1.6.0** release. 
+ 
+ All other major 1.6.0 upgrades, including the new multi-distro `install.sh`, more readable temperature card labels, automated update checking, and multi-init system support (`systemd`, `runit`, `OpenRC`), are working. 
 
-| Package Manager | Distributions |
-|:---|:---|
-| `apt` | Ubuntu, Debian, Linux Mint, Pop!_OS, elementary, Kali, Raspberry Pi OS, Armbian, Zorin, and any ID_LIKE=debian/ubuntu derivative |
-| `pacman` | Arch, Manjaro, EndeavourOS, Garuda, Artix, CachyOS |
-| `dnf` | Fedora, RHEL, CentOS Stream, Rocky, AlmaLinux, Nobara, Ultramarine |
-| `zypper` | openSUSE Tumbleweed, openSUSE Leap, SLES |
-| `emerge` | Gentoo (prints instructions, doesn't auto-emerge) |
-| `nix` | NixOS (prints instructions to use the AppImage instead) |
-| Unknown | Any other distro — prints a warning listing what to install manually, then continues |
-
-I will be looking into runit and OpenRC as well. 
-
-**Update:** If this is still up, I am still working on it. My other updates are on hold until I have tested that the issues are fixed. I have run into some issues, but once I get that sorted, trying to add `runi` and `OpenRC`, changing names in the temperature cards (better clarity on what the temps represent instead of Motherboard 1), and building and installing the `deb` file introduced some regressions that are now being worked on. To explain how it works now, the `install.sh` file will check what init system you run, and if it is not `systemd`, `runit`, or `OpenRC`, then it falls into the unknown category. A new checking system to see if there is an update for `OpenRGB` and `Fan Hub`. I am also looking into a polkit install button in the `appimage` because it may work on my system, but if it fails on yours, there is a fallback. A newer mode feature lets you know if you are in `Normal` or `Emergency` mode, and the emergency 100% button became `Activate Emergency mode` for more clarity on what that button does. Since newer features were added, the version will be bumped to 1.6.0 due to multiple updates to the workflow, better clarity, upgrade support for `OpenRGB` and `FanHub`, init system check in the tar.gz's `install.sh`, and dashboard errors after the temp card updates.
+ I apologize for the temporary disruption and deeply appreciate your patience while I iron out this last hurdle.
 
 ---
 
