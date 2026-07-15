@@ -15,7 +15,7 @@ v1.5.5 · Python 3.10+ · PyQt6 · Ubuntu · Arch · Fedora · Any systemd distr
 IMPORTANT
 **Fixed, but a New Temporary Bug Popped Up**
  
-**The Good News:** The previous packaging conflict between the `.deb` package and the `appimage` (which handles `polkit` and `udev` rules) in 1.5.5 has been resolved using an automated `--install` hook for the AppImage.
+**The Good News:** The previous packaging conflict between the `.deb` package and the `appimage` (which handles `polkit` and `udev` rules) in 1.6.0 has been resolved using an automated `--install` hook for the AppImage.
  
 **The Active Issue:** This packaging fix unfortunately introduced a race condition bug. Emergency Mode is incorrectly triggering due to a state conflict between the Fan Curve editor, the Fan Control tab overrides, and the background daemon.
  
