@@ -12,6 +12,8 @@ v1.5.5 · Python 3.10+ · PyQt6 · Ubuntu · Arch · Fedora · Any systemd distr
 
 ## Important 1.6.0 Pre-Release Notice
 
+**Update:** Well, I feel stupid. There was no race condition. What I thought was going on was that the Daemon was changing the fan speed of the CPU and would not allow you to go to 100% for the RPM to be at max, but what actually happened was that 0% was actually full RPM and 100% was silent mode. I'm still adding the IPC, but I chased all of that to only figure out it was a flipped booloean.
+
 IMPORTANT
 **Fixed, but a New Temporary Bug Popped Up**
  
