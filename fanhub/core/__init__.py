@@ -1,1 +1,0 @@
-# Fan Hub core package
