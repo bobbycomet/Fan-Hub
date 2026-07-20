@@ -1,5 +1,3 @@
----
-
 ## What's New in 1.6.0
 
 Fan Hub 1.6.0 is a stability and polish release. If you used 1.5.5, here's what's different:
