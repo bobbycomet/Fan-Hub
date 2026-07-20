@@ -130,7 +130,6 @@ The daemon keeps your fan curves running even when Fan Hub's window is closed, a
 Run this after extracting the Fan Hub tarball:
 
 ```
-tar -xzf fanhub_v1.6.0.tar.gz
 ./FanHub-1.6.0-x86_64.AppImage --install 
 # This runs the included install.sh embedded in the appimage
 ```
