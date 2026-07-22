@@ -10,6 +10,8 @@
 
 v1.6.0 · Python 3.10+ · PyQt6 · Ubuntu · Arch · Fedora · Any systemd, runit, or OpenRC distro
 
+Read the [FAQs](https://github.com/bobbycomet/Fan-Hub/wiki/FAQs) for more details.
+
 ## Why Fan Hub Exists
 
 On Windows, fan control is solved. **Argus Monitor**, **FanControl**, **HWiNFO**, and **NZXT CAM** give you a graphical interface where you draw a temperature-to-speed curve, assign it to a fan, save it as a profile, and forget about it. The software runs in the background, the curves stay active at boot, and everything just works.
