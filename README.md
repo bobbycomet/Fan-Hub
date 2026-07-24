@@ -12,6 +12,24 @@ v1.6.0 · Python 3.10+ · PyQt6 · Ubuntu · Arch · Fedora · Any systemd, runi
 
 Read the [FAQs](https://github.com/bobbycomet/Fan-Hub/wiki/FAQs) for more details.
 
+### Important Notice for NVIDIA & Long-Uptime Users
+
+#### 1. GPU Diagnostic Error (`NVML: driver/library version mismatch`)
+If Fan Hub reports an NVML initialization failure, **this is not a Fan Hub bug.**
+
+**Cause:** Your package manager updated the NVIDIA userspace libraries while the old kernel module was still loaded in memory.
+
+**Fix:** Fully **reboot your system** to reload the matching kernel module and userspace libraries.
+
+#### 2. Fan Calibration Drift After Extended Uptime
+**Symptom:** Motherboard fan RPM readings may temporarily show incorrect maximum values (e.g., 1000–1100 RPM at 100% duty cycle) after 24+ hours of uptime.
+
+**Behavior:** This is usually a temporary telemetry calibration drift that self-corrects after 1–2 hours once the symptom appears.
+
+**Status:** A permanent fix to reduce related notification spam is in development.
+
+**Immediate Fix:** Reboot the system.
+
 ## Why Fan Hub Exists
 
 On Windows, fan control is solved. **Argus Monitor**, **FanControl**, **HWiNFO**, and **NZXT CAM** give you a graphical interface where you draw a temperature-to-speed curve, assign it to a fan, save it as a profile, and forget about it. The software runs in the background, the curves stay active at boot, and everything just works.
