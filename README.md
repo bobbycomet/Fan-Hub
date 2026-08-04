@@ -8,7 +8,7 @@
 
 **Linux fan control, the way it should work.**
 
-v1.6.0 · Python 3.10+ · PyQt6 · Ubuntu · Arch · Fedora · Any systemd, runit, or OpenRC distro
+v1.6.1 · Python 3.10+ · PyQt6 · Ubuntu · Arch · Fedora · Any systemd, runit, or OpenRC distro
 
 Read the [FAQs](https://github.com/bobbycomet/Fan-Hub/wiki/FAQs) for more details.
 
